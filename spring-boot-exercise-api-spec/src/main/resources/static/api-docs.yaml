@@ -1,0 +1,232 @@
+openapi: 3.1.0
+info:
+   title: Swagger Spring Boot Exercice
+   version: 1.0.0
+   description: REST API for managing product rates for multiple brands on an e-commerce platform.
+
+paths:
+   /v1/rates:
+      post:
+         tags:
+           - rates
+         summary: Adds a new rate
+         operationId: addRate
+         requestBody:
+           description: Create a new rate
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/RateCreate'
+           required: true
+         responses:
+            '201':
+               description: Successful operation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Rate'
+            '400':
+                description: Invalid input
+            '422':
+                description: Validation exception
+      get:
+         tags:
+            - rates
+         summary: Search rate
+         operationId: searchRate
+         parameters:
+            - name: effective_date
+              in: query
+              description: Effective date of the rate. If not provided, the current date will be used.
+              required: false
+              schema:
+                 type: string
+                 format: date
+            - name: brand_id
+              in: query
+              description: Brand id.
+              required: true
+              schema:
+                 type: integer
+                 format: int64
+            - name: product_id
+              in: query
+              description: Product id.
+              required: true
+              schema:
+                 type: integer
+                 format: int64
+         responses:
+            '200':
+               description: Successful operation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Rate'
+            '404':
+               description: No rate found
+
+   /v1/rates/{rateId}:
+      get:
+         tags:
+           - rates
+         summary: Get a rate
+         operationId: getRate
+         parameters:
+           - name: rateId
+             in: path
+             description: Rate id
+             required: true
+             schema:
+               type: integer
+               format: int64
+         responses:
+            '200':
+               description: Rate Created
+               content:
+                  application/json:
+                     schema:
+                        type: array
+                        items:
+                           $ref: '#/components/schemas/Rate'
+      
+      put:
+         tags:
+           - rates
+         summary: Update a rate
+         operationId: updateRate
+         parameters:
+           - name: rateId
+             in: path
+             description: Rate id
+             required: true
+             schema:
+               type: integer
+               format: int64
+         requestBody:
+           description: Update an existing rate
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/RateUpdate'
+           required: true
+         responses:
+            '200':
+               description: Successful operation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Rate'
+            '404':
+                description: Rate not found
+            '422':
+                description: Validation exception
+                           
+      delete:
+         tags:
+           - rates
+         summary: Deletes a rate
+         description: Deletes a pet
+         operationId: deleteRate
+         parameters:
+           - name: rateId
+             in: path
+             description: Rate id
+             required: true
+             schema:
+               type: integer
+               format: int64
+         responses:
+            '204':
+               description: Successful operation
+               
+components:
+   schemas:
+      Rate:
+         type: object
+         properties:
+            id:
+               type: integer
+               format: int64
+               example: 123
+            brand_id:
+               type: integer
+               format: int64
+               example: 1
+            product_id:
+               type: integer
+               format: int64
+               example: 34576
+            effective_start_date: 
+               type: string
+               format: date
+               example: 2025-01-01
+            effective_end_date: 
+               type: string
+               format: date
+               example: 2025-06-30
+            price:
+               type: string
+               example: 10.50 € (EUR)
+
+      RateCreate:
+         type: object
+         properties:
+            brand_id:
+               type: integer
+               format: int64
+               example: 1
+            product_id:
+               type: integer
+               format: int64
+               example: 34576
+            effective_start_date: 
+               type: string
+               format: date
+               example: 2025-01-01
+            effective_end_date: 
+               type: string
+               format: date
+               example: 2025-06-30
+            price:
+               type: number
+               format: double
+               example: 10.50
+            currency:
+               $ref: "#/components/schemas/Currency"
+               example: EUR
+               
+         required:
+            - brand_id
+            - product_id
+            - effective_start_date
+            - effective_end_date
+            - price
+            - currecy
+
+      RateUpdate:
+         type: object
+         properties:
+            price:
+               type: number
+               format: double
+               example: 15.25
+            currency:
+               $ref: "#/components/schemas/Currency"
+               example: USD
+         required:
+            - price
+            - currecy
+      Currency:
+         type: string
+         enum:
+            - EUR
+            - USD
+
+   securitySchemes:
+      basicAuth: 
+         type: http
+         scheme: basic
+
+security:
+  - basicAuth: []
