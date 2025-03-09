@@ -20,6 +20,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE INDEX rates_brand_id_index ON T_RATES USING btree (brand_id);
 	CREATE INDEX rates_product_id_index ON T_RATES USING btree (product_id);
 	CREATE INDEX rates_currency_code_index ON T_RATES USING btree (currency_code);
+	
+	GRANT ALL PRIVILEGES ON T_RATES TO "user";
 
 	INSERT INTO public.t_rates
 	(brand_id, product_id, start_date, end_date, price, currency_code)
