@@ -7,7 +7,7 @@ services:
   environment:
    POSTGRES_USER: postgres
    POSTGRES_PASSWORD: postgresPass
-   POSTGRES_DB: exercicedb
+   POSTGRES_DB: exercisedb
    LANG: en_US.UTF-8
   volumes:
    - ./config/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d

@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-   title: Swagger Spring Boot Exercice
+   title: Swagger Spring Boot Exercise
    version: 1.0.0
    description: REST API for managing product rates for multiple brands on an e-commerce platform.
 
