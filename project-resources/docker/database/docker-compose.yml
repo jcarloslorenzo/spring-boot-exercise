@@ -1,0 +1,26 @@
+services:
+ postgresql:
+  container_name: local-database
+  image: 'postgres:17.4'
+  ports:
+   - 5432:5432
+  environment:
+   POSTGRES_USER: postgres
+   POSTGRES_PASSWORD: postgresPass
+   POSTGRES_DB: exercicedb
+   LANG: en_US.UTF-8
+  volumes:
+   - ./config/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+#   - postgresql_data:/var/lib/postgresql/data
+  networks:
+   - local_network
+
+networks:
+  local_network:
+    ipam:
+      driver: default
+      config:
+       - subnet: 172.45.0.0/16
+
+# volumes:
+#  postgresql_data:
