@@ -25,6 +25,8 @@ services:
       - ./config/wiremock/extensions:/var/wiremock/extensions
       - ./config/wiremock/__files:/home/wiremock/__files
       - ./config/wiremock/mappings:/home/wiremock/mappings
+      networks:
+      - local_network
 
 networks:
    local_network:
