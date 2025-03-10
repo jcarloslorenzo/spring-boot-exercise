@@ -48,14 +48,14 @@ paths:
               required: true
               schema:
                  type: integer
-                 format: int64
+                 format: int32
             - name: product_id
               in: query
               description: Product id.
               required: true
               schema:
                  type: integer
-                 format: int64
+                 format: int32
          responses:
             '200':
                description: Successful operation
@@ -79,16 +79,14 @@ paths:
              required: true
              schema:
                type: integer
-               format: int64
+               format: int32
          responses:
             '200':
-               description: Rate Created
+               description: Successful operation
                content:
                   application/json:
                      schema:
-                        type: array
-                        items:
-                           $ref: '#/components/schemas/Rate'
+                        $ref: '#/components/schemas/Rate'
       
       put:
          tags:
@@ -102,7 +100,7 @@ paths:
              required: true
              schema:
                type: integer
-               format: int64
+               format: int32
          requestBody:
            description: Update an existing rate
            content:
@@ -135,7 +133,7 @@ paths:
              required: true
              schema:
                type: integer
-               format: int64
+               format: int32
          responses:
             '204':
                description: Successful operation
@@ -147,15 +145,15 @@ components:
          properties:
             id:
                type: integer
-               format: int64
+               format: int32
                example: 123
             brand_id:
                type: integer
-               format: int64
+               format: int32
                example: 1
             product_id:
                type: integer
-               format: int64
+               format: int32
                example: 34576
             effective_start_date: 
                type: string
@@ -174,11 +172,11 @@ components:
          properties:
             brand_id:
                type: integer
-               format: int64
+               format: int32
                example: 1
             product_id:
                type: integer
-               format: int64
+               format: int32
                example: 34576
             effective_start_date: 
                type: string
