@@ -34,6 +34,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>spring-boot-exercise-currency-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>spring-boot-exercise-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -95,6 +100,7 @@
 		<module>spring-boot-exercise-api</module>
 		<module>spring-boot-exercise-app</module>
 		<module>spring-boot-exercise-report</module>
+		<module>spring-boot-exercise-currency-client</module>
 	</modules>
 
 	<build>
