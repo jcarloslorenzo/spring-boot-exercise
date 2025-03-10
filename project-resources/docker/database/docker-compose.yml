@@ -1,26 +1,43 @@
 services:
- postgresql:
-  container_name: local-database
-  image: 'postgres:17.4'
-  ports:
-   - 5432:5432
-  environment:
-   POSTGRES_USER: postgres
-   POSTGRES_PASSWORD: postgresPass
-   POSTGRES_DB: exercisedb
-   LANG: en_US.UTF-8
-  volumes:
-   - ./config/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+   postgresql:
+      container_name: local-database
+      image: postgres:17.4
+      ports:
+      - 5432:5432
+      environment:
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: postgresPass
+         POSTGRES_DB: exercisedb
+         LANG: en_US.UTF-8
+      volumes:
+      - ./config/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 #   - postgresql_data:/var/lib/postgresql/data
-  networks:
-   - local_network
+      networks:
+      - local_network
+
+   wiremock:
+      container_name: wiremock
+      image: wiremock/wiremock:3.12.1
+      ports:
+      - 8080:8080
+      entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
+      volumes:
+      - ./config/wiremock/extensions:/var/wiremock/extensions
+      - ./config/wiremock/__files:/home/wiremock/__files
+      - ./config/wiremock/mappings:/home/wiremock/mappings
 
 networks:
-  local_network:
-    ipam:
-      driver: default
-      config:
-       - subnet: 172.45.0.0/16
+   local_network:
+      ipam:
+         driver: default
+         config:
+         -  subnet: 172.45.0.0/16
 
 # volumes:
-#  postgresql_data:
+# ------------------
+# Orphaned comments:
+# ------------------
+# Was at begin of line:34 :# ------------------
+# Was at begin of line:35 :# Orphaned comments:
+# Was at begin of line:36 :# ------------------
+# Was at begin of line:37 :# Was at begin of line:34 :#  postgresql_data:
