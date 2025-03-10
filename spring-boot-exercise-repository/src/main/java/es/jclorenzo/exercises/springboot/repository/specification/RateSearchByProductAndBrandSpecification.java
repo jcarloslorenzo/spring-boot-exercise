@@ -1,7 +1,5 @@
 package es.jclorenzo.exercises.springboot.repository.specification;
 
-import java.time.LocalDate;
-
 import org.springframework.data.jpa.domain.Specification;
 
 import es.jclorenzo.exercises.springboot.repository.entity.RateEntity;
@@ -17,7 +15,7 @@ import lombok.AllArgsConstructor;
  * effective date.
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class RateSearchSpecification implements Specification<RateEntity> {
+public class RateSearchByProductAndBrandSpecification implements Specification<RateEntity> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 2960487975611398691L;
@@ -28,23 +26,18 @@ public class RateSearchSpecification implements Specification<RateEntity> {
 	/** The product id. */
 	private final Integer productId;
 
-	/** The effective date. */
-	private final LocalDate effectiveDate;
-
 	/**
 	 * Gets a new specification instance.
 	 *
-	 * @param brandId       the brand ID
-	 * @param productId     the product ID
-	 * @param effectiveDate the effective date
+	 * @param brandId   the brand ID
+	 * @param productId the product ID
 	 * @return the new specification instance
 	 */
-	public static RateSearchSpecification getNewInstance(
+	public static RateSearchByProductAndBrandSpecification getNewInstance(
 			final int brandId,
-			final int productId,
-			final LocalDate effectiveDate) {
+			final int productId) {
 
-		return new RateSearchSpecification(brandId, productId, effectiveDate);
+		return new RateSearchByProductAndBrandSpecification(brandId, productId);
 	}
 
 	/**
@@ -55,9 +48,7 @@ public class RateSearchSpecification implements Specification<RateEntity> {
 			final CriteriaBuilder criteriaBuilder) {
 		return criteriaBuilder.and(
 				criteriaBuilder.equal(root.<Integer>get("productId"), this.productId),
-				criteriaBuilder.equal(root.<Integer>get("brandId"), this.brandId),
-				criteriaBuilder.lessThanOrEqualTo(root.<LocalDate>get("startDate"), this.effectiveDate),
-				criteriaBuilder.greaterThanOrEqualTo(root.<LocalDate>get("endDate"), this.effectiveDate));
+				criteriaBuilder.equal(root.<Integer>get("brandId"), this.brandId));
 	}
 
 }
