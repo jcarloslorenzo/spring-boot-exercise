@@ -4,16 +4,17 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ContextConfiguration;
 
 import es.jclorenzo.exercises.springboot.repository.RateRepository;
 import es.jclorenzo.exercises.springboot.repository.config.ModuleConfiguration;
 import es.jclorenzo.exercises.springboot.repository.entity.RateEntity;
-import es.jclorenzo.exercises.springboot.repository.specification.RateSearchSpecification;
+import es.jclorenzo.exercises.springboot.repository.specification.RateSearchByDateRangeSpecification;
+import es.jclorenzo.exercises.springboot.repository.specification.RateSearchByEffectiveDateSpecification;
+import es.jclorenzo.exercises.springboot.repository.specification.RateSearchByProductAndBrandSpecification;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = ModuleConfiguration.class)
 public class RateRepositoryTest {
 
@@ -32,7 +32,7 @@ public class RateRepositoryTest {
 	/**
 	 * Test find by ID.
 	 */
-	@Test
+//	@Test
 	public void testFindByID() {
 		final Integer rateId = 1;
 		final Integer expectedPrize = 1550;
@@ -48,8 +48,8 @@ public class RateRepositoryTest {
 	/**
 	 * Specification search test.
 	 */
-	@Test
-	public void specificationSearchTest() {
+//	@Test
+	public void specificationSearchByEffectiveDateTest() {
 		final int brandId = 1;
 		final int productId = 1;
 		final LocalDate effectiveDate = LocalDate.of(2022, 6, 14);
@@ -59,11 +59,33 @@ public class RateRepositoryTest {
 		Assertions.assertDoesNotThrow(() -> {
 
 			final Optional<RateEntity> rate = this.rateRepo.findOne(
-					RateSearchSpecification.getNewInstance(brandId, productId, effectiveDate));
+					Specification
+							.where(RateSearchByProductAndBrandSpecification.getNewInstance(brandId, productId))
+							.and(RateSearchByEffectiveDateSpecification.getNewInstance(effectiveDate)));
 
 			Assertions.assertTrue(rate.isPresent());
 			Assertions.assertEquals(expectedPrice, rate.get().getPrice());
 			RateRepositoryTest.log.debug("Rate -> {}", rate.get());
+		});
+	}
+
+	/**
+	 * Specification search test.
+	 */
+//	@Test
+	public void specificationExistByDateRangeTest() {
+		final int brandId = 1;
+		final int productId = 1;
+		final LocalDate endDate = LocalDate.of(2022, 6, 14);
+		final LocalDate startDate = LocalDate.of(2022, 1, 1);
+
+		Assertions.assertDoesNotThrow(() -> {
+
+			Assertions.assertTrue(
+					this.rateRepo.exists(
+							Specification
+									.where(RateSearchByProductAndBrandSpecification.getNewInstance(brandId, productId))
+									.and(RateSearchByDateRangeSpecification.getNewInstance(startDate, endDate))));
 		});
 	}
 

@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -14,6 +15,7 @@ import lombok.Data;
  */
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "t_rates", schema = "public")
 public class RateEntity {
 
