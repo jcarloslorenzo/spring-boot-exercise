@@ -5,24 +5,27 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * The Class RateEntity.
  */
 @Data
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "t_rates", schema = "public")
 public class RateEntity {
 
 	/** Identificador único de la tarifa. */
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, insertable = false, updatable = false)
-	@GeneratedValue
 	private Integer id;
 
 	/** Identificador único de la marca. */
