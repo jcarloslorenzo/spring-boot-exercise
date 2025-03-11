@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import es.jclorenzo.exercises.springboot.currency.exception.RemoteSystemAccessException;
+import es.jclorenzo.exercises.springboot.service.exception.DateRangeOverlapException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -47,6 +49,45 @@ public class RatesControllerAdvice
 	public ResponseEntity<Object> handleAccessDeniedException(final AccessDeniedException ex,
 			final WebRequest request) {
 		return this.generateResponseEntity(ex, HttpStatus.NOT_FOUND, "Not Found", request);
+	}
+
+	/**
+	 * Handle date range overlap exception.
+	 *
+	 * @param ex      the ex
+	 * @param request the request
+	 * @return the responde entity
+	 */
+	@ExceptionHandler(DateRangeOverlapException.class)
+	public ResponseEntity<Object> handleDateRangeOverlapException(final DateRangeOverlapException ex,
+			final WebRequest request) {
+		return this.generateResponseEntity(ex, HttpStatus.CONFLICT, "Conflicting data", request);
+	}
+
+	/**
+	 * Handle illegal argument exception.
+	 *
+	 * @param ex      the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<Object> handleIllegalArgumentException(final IllegalArgumentException ex,
+			final WebRequest request) {
+		return this.generateResponseEntity(ex, HttpStatus.BAD_REQUEST, "Bad request", request);
+	}
+
+	/**
+	 * Handle date range overlap exception.
+	 *
+	 * @param ex      the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
+	@ExceptionHandler(RemoteSystemAccessException.class)
+	public ResponseEntity<Object> handleRemoteSystemAccessException(final RemoteSystemAccessException ex,
+			final WebRequest request) {
+		return this.generateResponseEntity(ex, HttpStatus.FAILED_DEPENDENCY, "Remote system error", request);
 	}
 
 	/**
