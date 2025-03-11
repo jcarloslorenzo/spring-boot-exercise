@@ -3,8 +3,8 @@ package es.jclorenzo.exercises.springboot.currency.model;
 /**
  * Currency.
  *
- * @param symbol the symbol
- * @param code the code
+ * @param symbol   the symbol
+ * @param code     the code
  * @param decimals the decimals
  */
 
