@@ -88,7 +88,7 @@ public class RatesController implements RatesApi {
 						this.rateService.search(
 								brandId,
 								productId,
-								effectiveDate)));
+								effectiveDate == null ? LocalDate.now() : effectiveDate)));
 	}
 
 	/**
