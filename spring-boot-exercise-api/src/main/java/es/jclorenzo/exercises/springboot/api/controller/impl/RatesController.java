@@ -1,15 +1,16 @@
 package es.jclorenzo.exercises.springboot.api.controller.impl;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.jclorenzo.exercises.springboot.api.controller.model.mapper.RateMapper;
 import es.jclorenzo.exercises.springboot.controller.RatesApi;
 import es.jclorenzo.exercises.springboot.model.Rate;
 import es.jclorenzo.exercises.springboot.model.RateCreate;
 import es.jclorenzo.exercises.springboot.model.RateUpdate;
+import es.jclorenzo.exercises.springboot.service.RateService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,11 +20,21 @@ import jakarta.validation.constraints.NotNull;
 @RestController
 public class RatesController implements RatesApi {
 
+	/** The rate service. */
+	private final RateService rateService;
+
+	/** The rate mapper. */
+	private final RateMapper rateMapper;
+
 	/**
 	 * Instantiates a new rates controller.
+	 *
+	 * @param rateService the rate service
+	 * @param rateMapper  the rate mapper
 	 */
-	public RatesController() {
-		// TODO Auto-generated constructor stub
+	public RatesController(final RateService rateService , final RateMapper rateMapper) {
+		this.rateMapper = rateMapper;
+		this.rateService = rateService;
 	}
 
 	/**
@@ -31,45 +42,66 @@ public class RatesController implements RatesApi {
 	 */
 	@Override
 	public ResponseEntity<Rate> addRate(@Valid final RateCreate rateCreate) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ResponseEntity.ok(
+				this.rateMapper.fromVO(
+						this.rateService.addNewRate(
+								rateCreate.getProductId(),
+								rateCreate.getBrandId(),
+								rateCreate.getEffectiveStartDate(),
+								rateCreate.getEffectiveEndDate(),
+								rateCreate.getPrice(),
+								rateCreate.getCurrency().getValue())));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ResponseEntity<Void> deleteRate(final Long rateId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Void> deleteRate(final Integer rateId) {
+		this.rateService.delete(rateId);
+		return ResponseEntity.noContent().build();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ResponseEntity<List<Rate>> getRate(final Long rateId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Rate> getRate(final Integer rateId) {
+
+		return ResponseEntity.ok(
+				this.rateMapper.fromVO(
+						this.rateService.findById(rateId)));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ResponseEntity<Rate> searchRate(@NotNull @Valid final Long brandId, @NotNull @Valid final Long productId,
+	public ResponseEntity<Rate> searchRate(
+			@NotNull @Valid final Integer brandId,
+			@NotNull @Valid final Integer productId,
 			@Valid final LocalDate effectiveDate) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return ResponseEntity.ok(
+				this.rateMapper.fromVO(
+						this.rateService.search(
+								brandId,
+								productId,
+								effectiveDate)));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ResponseEntity<Rate> updateRate(final Long rateId, @Valid final RateUpdate rateUpdate) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Rate> updateRate(final Integer rateId, @Valid final RateUpdate rateUpdate) {
+		return ResponseEntity.ok(
+				this.rateMapper.fromVO(
+						this.rateService.updatePrice(
+								rateId,
+								rateUpdate.getPrice(),
+								rateUpdate.getCurrency().getValue())));
 	}
 
 }
