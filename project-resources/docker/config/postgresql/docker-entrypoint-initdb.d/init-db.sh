@@ -24,6 +24,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE INDEX idx_rate_product_brand_date ON T_RATES (PRODUCT_ID, BRAND_ID, START_DATE, END_DATE);
 	
 	GRANT ALL PRIVILEGES ON T_RATES TO "user";
+	GRANT USAGE, SELECT ON SEQUENCE t_rates_id_seq TO "user";
 	
 
 	INSERT INTO public.t_rates
