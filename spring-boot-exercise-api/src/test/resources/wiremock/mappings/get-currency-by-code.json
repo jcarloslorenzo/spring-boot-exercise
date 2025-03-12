@@ -1,0 +1,22 @@
+{
+	"request": {
+		"method": "GET",
+		"urlPattern": "/v1/currencies/(EUR|USD)",
+		"headers": {
+			"Authorization": {
+				"matches": "Basic Y3VycmVuY3lVc2VyOmN1cnJlbmN5UGFzc3dvcmQ="
+			}
+		}
+	},
+	"response": {
+		"status": 200,
+		"transformers": [
+			"response-template"
+		],
+		"body": "{{#eq request.path.[2] 'EUR'}}{\"symbol\": \"€\", \"code\": \"EUR\", \"decimals\": 2}{{else}}{\"symbol\": \"$\", \"code\": \"USD\", \"decimals\": 2}{{/eq}}",
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"fixedDelayMilliseconds": 100
+	}
+}

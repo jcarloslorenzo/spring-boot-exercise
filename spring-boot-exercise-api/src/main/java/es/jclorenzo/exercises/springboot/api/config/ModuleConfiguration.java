@@ -31,11 +31,11 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 public class ModuleConfiguration {
 
 	/** The context path. */
-	@Value("${server.servlet.context-path}")
+	@Value("${server.servlet.context-path:/test}")
 	private String contextPath;
 
 	/** The server port. */
-	@Value("${server.port}")
+	@Value("${server.port:9090}")
 	private String serverPort;
 
 	/** The ssl enabled. */
@@ -84,7 +84,6 @@ public class ModuleConfiguration {
 	 */
 	@Bean
 	OpenAPI customOpenAPI() {
-
 		return new OpenAPI()
 				.security(List.of(new SecurityRequirement().addList("BasicAuth")))
 				.components(

@@ -1,0 +1,18 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/v1/currencies",
+		"headers": {
+			"Authorization": {
+				"matches": "Basic Y3VycmVuY3lVc2VyOmN1cnJlbmN5UGFzc3dvcmQ="
+			}
+		}
+	},
+	"response": {
+		"status": 200,
+		"body": "[{\"symbol\": \"€\", \"code\": \"EUR\", \"decimals\": 2}, {\"symbol\": \"$\", \"code\": \"USD\", \"decimals\": 2}]",
+		"headers": {
+			"Content-Type": "application/json"
+		}
+	}
+}
