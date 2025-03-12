@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.jclorenzo.exercises.springboot.api.controller.RatesApi;
+import es.jclorenzo.exercises.springboot.api.controller.model.Rate;
+import es.jclorenzo.exercises.springboot.api.controller.model.RateCreate;
+import es.jclorenzo.exercises.springboot.api.controller.model.RateUpdate;
 import es.jclorenzo.exercises.springboot.api.controller.model.mapper.RateMapper;
-import es.jclorenzo.exercises.springboot.controller.RatesApi;
-import es.jclorenzo.exercises.springboot.model.Rate;
-import es.jclorenzo.exercises.springboot.model.RateCreate;
-import es.jclorenzo.exercises.springboot.model.RateUpdate;
 import es.jclorenzo.exercises.springboot.service.RateService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotNull;
  * The Class RatesController.
  */
 @RestController
-public class RatesController implements RatesApi {
+public class RateController implements RatesApi {
 
 	/** The rate service. */
 	private final RateService rateService;
@@ -32,7 +32,7 @@ public class RatesController implements RatesApi {
 	 * @param rateService the rate service
 	 * @param rateMapper  the rate mapper
 	 */
-	public RatesController(final RateService rateService , final RateMapper rateMapper) {
+	public RateController(final RateService rateService , final RateMapper rateMapper) {
 		this.rateMapper = rateMapper;
 		this.rateService = rateService;
 	}
