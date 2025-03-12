@@ -51,8 +51,8 @@
 					<cleanupOutput>true</cleanupOutput>
 					<generatorName>spring</generatorName>
 					<generateSupportingFiles>false</generateSupportingFiles>
-					<apiPackage>es.jclorenzo.exercises.springboot.controller</apiPackage>
-					<modelPackage>es.jclorenzo.exercises.springboot.model</modelPackage>
+					<apiPackage>es.jclorenzo.exercises.springboot.api.controller</apiPackage>
+					<modelPackage>es.jclorenzo.exercises.springboot.api.controller.model</modelPackage>
 					<output>${project.build.directory}/generated-sources/openapi</output>
 					<configOptions>
 						<useTags>true</useTags>

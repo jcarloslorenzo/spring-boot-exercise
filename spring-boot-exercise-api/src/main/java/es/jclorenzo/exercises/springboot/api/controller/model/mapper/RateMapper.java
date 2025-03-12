@@ -3,7 +3,7 @@ package es.jclorenzo.exercises.springboot.api.controller.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import es.jclorenzo.exercises.springboot.model.Rate;
+import es.jclorenzo.exercises.springboot.api.controller.model.Rate;
 import es.jclorenzo.exercises.springboot.service.model.RateVO;
 
 /**
