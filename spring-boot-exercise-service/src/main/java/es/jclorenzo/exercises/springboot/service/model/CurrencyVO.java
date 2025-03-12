@@ -20,4 +20,13 @@ public class CurrencyVO {
 	/** The decimals. */
 	private final int decimals;
 
+	/**
+	 * Gets the format pattern.
+	 *
+	 * @return the format pattern
+	 */
+	protected String getCurrencyFormat() {
+		return "%.".concat(String.valueOf(this.decimals)).concat("f %s (%s)");
+	}
+
 }

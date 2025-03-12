@@ -97,7 +97,7 @@ public class RateControllerTest {
 
 		final String url = "/v1/rates/1";
 
-		final String expectedPrice = "15.5 € (EUR)";
+		final String expectedPrice = "15,50 € (EUR)";
 		Assertions.assertDoesNotThrow(() -> {
 			final HttpHeaders headers = this.initHeadersWithAuthorization();
 
@@ -143,7 +143,7 @@ public class RateControllerTest {
 	void addRate() {
 		final String url = "/v1/rates";
 
-		final String expectedPrice = "12.5 € (EUR)";
+		final String expectedPrice = "12,50 € (EUR)";
 
 		final RateCreate newRate = new RateCreate(
 				1,
@@ -204,7 +204,7 @@ public class RateControllerTest {
 	void updatePrice() {
 		final String url = "/v1/rates/5";
 
-		final String expectedPrice = "12.5 $ (USD)";
+		final String expectedPrice = "12,50 $ (USD)";
 
 		final RateUpdate newRatePrice = new RateUpdate(
 				12.50D,
@@ -231,7 +231,7 @@ public class RateControllerTest {
 	@Test
 	void searchRate() {
 
-		final String expectedPrice = "20.5 € (EUR)";
+		final String expectedPrice = "20,50 € (EUR)";
 
 		final String url = "/v1/rates?product_id=1&brand_id=2&effective_date=2022-03-14";
 

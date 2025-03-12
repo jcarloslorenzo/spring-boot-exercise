@@ -35,9 +35,8 @@ public class PriceVO {
 	 * @return the formatted as string
 	 */
 	public String getFormattedAsString() {
-
 		return String.format(
-				"%s %s (%s)",
+				this.currency.getCurrencyFormat(),
 				BigDecimal.valueOf(this.price)
 						.divide(BigDecimal.TEN.pow(this.currency.getDecimals())),
 				this.currency.getSymbol(),
