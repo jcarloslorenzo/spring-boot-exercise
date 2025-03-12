@@ -4,25 +4,24 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.test.context.ContextConfiguration;
 
 import es.jclorenzo.exercises.springboot.repository.RateRepository;
-import es.jclorenzo.exercises.springboot.repository.config.ModuleConfiguration;
 import es.jclorenzo.exercises.springboot.repository.entity.RateEntity;
 import es.jclorenzo.exercises.springboot.repository.specification.RateSearchByDateRangeSpecification;
 import es.jclorenzo.exercises.springboot.repository.specification.RateSearchByEffectiveDateSpecification;
 import es.jclorenzo.exercises.springboot.repository.specification.RateSearchByProductAndBrandSpecification;
+import es.jclorenzo.exercises.springboot.respository.test.config.RepositoryTestConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * The Class RateRepositoryTest.
  */
 @Slf4j
-@DataJpaTest
-@ContextConfiguration(classes = ModuleConfiguration.class)
+@SpringBootTest(classes = RepositoryTestConfiguration.class)
 public class RateRepositoryTest {
 
 	/** The rate repo. */
@@ -32,7 +31,7 @@ public class RateRepositoryTest {
 	/**
 	 * Test find by ID.
 	 */
-//	@Test
+	@Test
 	public void testFindByID() {
 		final Integer rateId = 1;
 		final Integer expectedPrize = 1550;
@@ -48,7 +47,7 @@ public class RateRepositoryTest {
 	/**
 	 * Specification search test.
 	 */
-//	@Test
+	@Test
 	public void specificationSearchByEffectiveDateTest() {
 		final int brandId = 1;
 		final int productId = 1;
@@ -72,7 +71,7 @@ public class RateRepositoryTest {
 	/**
 	 * Specification search test.
 	 */
-//	@Test
+	@Test
 	public void specificationExistByDateRangeTest() {
 		final int brandId = 1;
 		final int productId = 1;
