@@ -1,0 +1,14 @@
+{
+	"request": {
+		"method": "GET",
+		"urlPattern": "/v1/currencies/([A-Z]{3})"
+	},
+	"response": {
+		"status": 401,
+		"body": "{ \"error\": \"Unauthorized: Missing or incorrect credentials\" }",
+		"headers": {
+			"Content-Type": "application/json",
+			"WWW-Authenticate": "Basic realm=\"Access to the currency API\""
+		}
+	}
+}

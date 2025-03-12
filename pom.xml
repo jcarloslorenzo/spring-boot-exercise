@@ -22,6 +22,8 @@
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<openapi-generator-maven-plugin.version>7.12.0</openapi-generator-maven-plugin.version>
 		<springdoc-openapi.version>2.8.5</springdoc-openapi.version>
+		
+		<wiremock-testcontainers-module.version>1.0-alpha-14</wiremock-testcontainers-module.version>
 
 	</properties>
 
@@ -70,6 +72,11 @@
 				<version>${springdoc-openapi.version}</version>
 			</dependency>
 
+				<dependency>
+				  <groupId>org.wiremock.integrations.testcontainers</groupId>
+				  <artifactId>wiremock-testcontainers-module</artifactId>
+				  <version>${wiremock-testcontainers-module.version}</version>
+				</dependency>
 		</dependencies>
 	</dependencyManagement>
 
