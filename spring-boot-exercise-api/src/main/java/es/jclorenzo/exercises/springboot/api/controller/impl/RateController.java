@@ -86,8 +86,8 @@ public class RateController implements RatesApi {
 		return ResponseEntity.ok(
 				this.rateMapper.fromVO(
 						this.rateService.search(
-								brandId,
 								productId,
+								brandId,
 								effectiveDate == null ? LocalDate.now() : effectiveDate)));
 	}
 
