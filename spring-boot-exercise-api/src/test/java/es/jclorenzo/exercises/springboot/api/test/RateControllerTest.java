@@ -6,7 +6,10 @@ import java.util.Base64;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -27,6 +30,7 @@ import es.jclorenzo.exercises.springboot.api.test.config.ApiTestConfiguration;
 /**
  * The Class RateControllerTest.
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ApiTestConfiguration.class)
 public class RateControllerTest {
 
@@ -198,7 +202,7 @@ public class RateControllerTest {
 	 */
 	@Test
 	void updatePrice() {
-		final String url = "/v1/rates/1";
+		final String url = "/v1/rates/5";
 
 		final String expectedPrice = "12.5 $ (USD)";
 
@@ -249,6 +253,7 @@ public class RateControllerTest {
 	 * Delete rate by ID.
 	 */
 	@Test
+	@Order(Integer.MAX_VALUE)
 	void deleteRateByID() {
 
 		final String url = "/v1/rates/1";
@@ -264,6 +269,28 @@ public class RateControllerTest {
 
 			Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 			Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+		});
+	}
+
+	/**
+	 * No currency service available.
+	 */
+	@Test
+	@Order(Integer.MAX_VALUE)
+	void noCurrencyServiceAvailable() {
+		RateControllerTest.wiremockContainer.stop();
+		final String url = "/v1/rates/6";
+
+		Assertions.assertDoesNotThrow(() -> {
+			final HttpHeaders headers = this.initHeadersWithAuthorization();
+
+			final HttpEntity<Rate> entity = new HttpEntity<>(headers);
+			final ResponseEntity<Rate> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, Rate.class);
+
+			this.restTemplate.getForEntity(url, Rate.class);
+
+			Assertions.assertTrue(response.getStatusCode().is4xxClientError());
+			Assertions.assertEquals(HttpStatus.FAILED_DEPENDENCY, response.getStatusCode());
 		});
 	}
 
