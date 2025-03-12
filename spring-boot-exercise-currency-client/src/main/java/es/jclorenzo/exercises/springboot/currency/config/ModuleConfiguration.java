@@ -1,14 +1,19 @@
 package es.jclorenzo.exercises.springboot.currency.config;
 
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestClient;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 /**
  * The Class ModuleConfig.
@@ -48,4 +53,17 @@ public class ModuleConfiguration {
 				.defaultHeader(HttpHeaders.AUTHORIZATION, authHeader)
 				.build();
 	}
+
+	/**
+	 * Currencies cache manager.
+	 *
+	 * @return the cache manager
+	 */
+	@Bean
+	CacheManager currenciesCacheManager() {
+		final CaffeineCacheManager cacheManager = new CaffeineCacheManager("currencies");
+		cacheManager.setCaffeine(Caffeine.newBuilder().maximumSize(10).expireAfterWrite(10, TimeUnit.MINUTES));
+		return cacheManager;
+	}
+
 }

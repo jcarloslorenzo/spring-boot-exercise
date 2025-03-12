@@ -2,6 +2,8 @@ package es.jclorenzo.exercises.springboot.service.impl;
 
 import java.time.LocalDate;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -91,6 +93,7 @@ public class RateServiceImpl implements RateService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "rates", key = "#productId + '-' + #brandId + '-' + #effectiveDate")
 	public RateVO search(final Integer productId, final Integer brandId, final LocalDate effectiveDate) {
 		return this.rateVOMapper.fromEntity(
 				this.rateRepo.findOne(
@@ -104,6 +107,7 @@ public class RateServiceImpl implements RateService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "rates", key = "#rateId")
 	public RateVO findById(final Integer rateId) {
 		return this.rateVOMapper.fromEntity(
 				this.rateRepo.findById(rateId)
@@ -114,6 +118,7 @@ public class RateServiceImpl implements RateService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@CacheEvict(value = "rates", key = "#rateId")
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public RateVO updatePrice(final Integer rateId, final Double price, final String currencyCode) {
 
@@ -131,6 +136,7 @@ public class RateServiceImpl implements RateService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@CacheEvict(value = "rates", key = "#rateId")
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public void delete(final Integer rateId) {
 		this.rateRepo.deleteById(rateId);

@@ -3,6 +3,7 @@ package es.jclorenzo.exercises.springboot.currency.client.impl;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,7 @@ public class CurrencyRemoteClientImpl implements CurrencyRemoteClient {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "currencies", key = "#currencyCode", cacheManager = "currenciesCacheManager")
 	public Currency getCurrencyByCode(final String currencyCode) {
 		try {
 			return this.currecyRestClient
