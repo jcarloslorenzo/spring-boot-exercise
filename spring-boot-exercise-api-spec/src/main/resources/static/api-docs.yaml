@@ -200,7 +200,7 @@ components:
             - effective_start_date
             - effective_end_date
             - price
-            - currecy
+            - currency
 
       RateUpdate:
          type: object
@@ -214,7 +214,7 @@ components:
                example: USD
          required:
             - price
-            - currecy
+            - currency
       Currency:
          type: string
          enum:
