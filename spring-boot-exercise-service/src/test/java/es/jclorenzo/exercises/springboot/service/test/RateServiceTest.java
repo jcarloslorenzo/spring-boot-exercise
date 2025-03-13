@@ -61,7 +61,7 @@ public class RateServiceTest {
 		final LocalDate startDate = LocalDate.now();
 		final LocalDate endDate = LocalDate.now().plusMonths(1);
 
-		final String expectedRateFormattedPrice = "12.34 € (EUR)";
+		final String expectedRateFormattedPrice = "12,34 € (EUR)";
 
 		Mockito.when(this.currencyClient.getCurrencyByCode(currencyCode))
 				.thenReturn(new Currency("€", currencyCode, 2));
@@ -149,7 +149,7 @@ public class RateServiceTest {
 		final String currencyCode = "EUR";
 		final LocalDate effectiveDate = LocalDate.now();
 
-		final String expectedRateFormattedPrice = "12.34 € (EUR)";
+		final String expectedRateFormattedPrice = "12,34 € (EUR)";
 
 		Mockito.when(this.currencyClient.getCurrencyByCode(currencyCode))
 				.thenReturn(new Currency("€", currencyCode, 2));
@@ -207,7 +207,7 @@ public class RateServiceTest {
 		final Integer rateId = 1;
 		final String currencyCode = "EUR";
 
-		final String expectedRateFormattedPrice = "12.34 € (EUR)";
+		final String expectedRateFormattedPrice = "12,34 € (EUR)";
 
 		Mockito.when(this.currencyClient.getCurrencyByCode(currencyCode))
 				.thenReturn(new Currency("€", currencyCode, 2));
@@ -231,7 +231,7 @@ public class RateServiceTest {
 
 		final Integer rateId = 1;
 
-		final String expectedRateFormattedPrice = "4.123 $ (USD)";
+		final String expectedRateFormattedPrice = "4,123 $ (USD)";
 
 		Mockito.when(this.currencyClient.getCurrencyByCode("EUR"))
 				.thenReturn(new Currency("€", "EUR", 2));
