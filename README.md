@@ -4,18 +4,18 @@ API REST para administrar tarifas de productos para múltiples marcas en una pla
 
 ## Descripción
 
-El API REST desplegada en este servicio ofrece métodos que permiten añadir, editar, eliminar y consultar tarifas de precios de productos. 
+El API REST desplegada en este servicio ofrece métodos que permiten añadir, editar, eliminar y consultar tarifas de precios de productos.   
 
-Una vez arrancado el servicio, es posible consultar información más detallada, en fomato Swagger, de los métodos disponibles (ver sección _**Construcción y uso**_). 
+Una vez arrancado el servicio, es posible consultar información más detallada, en fomato Swagger, de los métodos disponibles (ver sección _**Construcción y uso**_).   
 
-Se trata de un servicio construído con Spring boot sobre un proyecto maven multi-módulo que sigue una arquitectura de tres capas (api, service, repository).
-Además, el proyecto incluye otros módulos para encapsular y separar las dependencias externas, informes, definición del API y arranque del servicio.
+Se trata de un servicio construído con Spring boot sobre un proyecto maven multi-módulo que sigue una arquitectura de tres capas (api, service, repository).  
+Además, el proyecto incluye otros módulos para encapsular y separar las dependencias externas, informes, definición del API y arranque del servicio.   
 En la sección _**Arquitectura**_ se dan más detalles sobre cada uno de estos módulos.
 
-La aplicación se ha desarrollado para conectarse a una base de datos PostgreSQL externa.
-Se incluye la configuración de un contenedor docker que permite levantar una base de datos para pruebas.
+La aplicación se ha desarrollado para conectarse a una base de datos PostgreSQL externa.   
+Se incluye la configuración de un contenedor docker que permite levantar una base de datos para pruebas. 
 
-Además, una de las dependencias de este servicio sería otro hipotético servicio de consulta de divisas.
+Además, una de las dependencias de este servicio sería otro hipotético servicio de consulta de divisas.   
 Este servicio ha sido simulado utilizando la herramienta WireMock, para la que también se incluye un contenedor docker.
 
 En la sección _**Construcción y uso**_ se ofrecen más detalles sobre cómo arrancar estos estos contenedores.
@@ -41,26 +41,38 @@ En la sección _**Construcción y uso**_ se ofrecen más detalles sobre cómo ar
 Cómo ya se ha comentado, se trata de un proyecto Maven que cuenta con los siguientes módulos:
 
 
-* **spring-boot-exercise-app:** Contiene la clase principal y la configuración que permite el arranque del servicio.
+* **spring-boot-exercise-app:**   
+Contiene la clase principal y la configuración que permite el arranque del servicio.
 
 
-* **spring-boot-exercise-api-spec:** Contiene la definición del API en formato Swagger (YAML). Su compilación genera la interfaz y los objetos de transferencia del 
-servicio. Aunque en escenarios reales este módulo debería ser en realidad un proyecto independiente, en esta prueba se ha incluido como un módulo más por sencillez.
+* **spring-boot-exercise-api-spec:**  
+Contiene la definición del API en formato Swagger (YAML). Su compilación genera la interfaz y los objetos de transferencia del servicio.  
+Aunque en escenarios reales este módulo debería ser en realidad un proyecto independiente, en esta prueba se ha incluido como un módulo más por sencillez.
 
 
-* **spring-boot-exercise-api:** Contiene la implementación de los servicios definidos en el módulo _spring-boot-exercise-api-spec_. Incluye una muestra básica de test de integración con Testcontainers para levantar una base de datos PostgreSQL y un servidor WireMock (simulación del servicio de divisas). 
+* **spring-boot-exercise-api:**  
+Contiene la implementación de los servicios definidos en el módulo _spring-boot-exercise-api-spec_.  
+Dispone de una configuración muy simple para spring security, que utiliza aunteticación básica y dispone de un único usuario en memoria (**user:password**) para el acceso a los servicios del API.   
+Incluye una muestra básica de test de integración con Testcontainers para levantar una base de datos PostgreSQL y un servidor WireMock (simulación del servicio de divisas).  
 
 
-* **spring-boot-exercise-service:** Contiene la lógica de negocio. Procesa las peticiones del API e interactua con la capa de datos ( _spring-boot-exercise-repository_ ) y con el cliente del servicio de divisas ( _spring-boot-exercise-currency-client_ ). Este módulo implementa una capa de caché para reducir las peticiones al modelo de datos. Incluye una muesta de test unitarios.
+* **spring-boot-exercise-service:**  
+Contiene la lógica de negocio.  
+Procesa las peticiones del API e interactua con la capa de datos ( _spring-boot-exercise-repository_ ) y con el cliente del servicio de divisas ( _spring-boot-exercise-currency-client_ ).  
+Este módulo implementa una capa de caché para reducir las peticiones al modelo de datos.  
+Incluye una muestra de test unitarios.
 
 
-* **spring-boot-exercise-service:** Contiene el cliente para el servicio de divisas externo e implementa una capa de caché para reducir las peticiones a dicho servicio.
+* **spring-boot-exercise-service:**  
+Contiene el cliente para el servicio de divisas externo e implementa una capa de caché para reducir las peticiones a dicho servicio.
 
 
-* **spring-boot-exercise-repository:** Contiene la implementaciókn de la capa de acceso a datos, utilizando Spring Data JPA y JPA Specification para las búsquedas.
+* **spring-boot-exercise-repository:**  
+Contiene la implementaciókn de la capa de acceso a datos, utilizando Spring Data JPA y JPA Specification para las búsquedas.
 
 
-* **spring-boot-exercise-report:** Este módulo se encarga de generar un informe de cobertura utilizando JaCoCo durante la compilación del proyecto.
+* **spring-boot-exercise-report:**  
+Este módulo se encarga de generar un informe de cobertura utilizando JaCoCo durante la compilación del proyecto.
 
 
 
