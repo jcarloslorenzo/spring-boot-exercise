@@ -8,9 +8,8 @@ El API REST desplegada en este servicio ofrece métodos que permiten añadir, ed
 
 Una vez arrancado el servicio, es posible consultar información más detallada, en fomato Swagger, de los métodos disponibles (ver sección _**Construcción y uso**_).   
 
-Se trata de un servicio construído con Spring boot sobre un proyecto maven multi-módulo que sigue una arquitectura de tres capas (api, service, repository).  
-Además, el proyecto incluye otros módulos para encapsular y separar las dependencias externas, informes, definición del API y arranque del servicio.   
-En la sección _**Arquitectura**_ se dan más detalles sobre cada uno de estos módulos.
+Se trata de un servicio construído con Spring boot sobre un proyecto maven multi-módulo que sigue una arquitectura hexagonal.  
+En la sección _**Arquitectura**_ se dan más detalles sobre cada uno de los módulos que componen el proyecto.
 
 La aplicación se ha desarrollado para conectarse a una base de datos PostgreSQL externa.   
 Se incluye la configuración de un contenedor docker que permite levantar una base de datos para pruebas. 
@@ -38,10 +37,10 @@ En la sección _**Construcción y uso**_ se ofrecen más detalles sobre cómo ar
 
 ## Arquitectura
 
-Cómo ya se ha comentado, se trata de un proyecto Maven que cuenta con los siguientes módulos:
+Cómo ya se ha comentado, se trata de un proyecto multi-módulo, construido siguiendo una arquitectura hexagonal, que cuenta con los siguientes módulos:
 
 
-* **spring-boot-exercise-app:**   
+* **spring-boot-exercise-bootstrap:**   
 Contiene la clase principal y la configuración que permite el arranque del servicio.
 
 
@@ -50,26 +49,20 @@ Contiene la definición del API en formato Swagger (YAML). Su compilación gener
 Aunque en escenarios reales este módulo debería ser en realidad un proyecto independiente, en esta prueba se ha incluido como un módulo más por sencillez.
 
 
-* **spring-boot-exercise-api:**  
-Contiene la implementación de los servicios definidos en el módulo _spring-boot-exercise-api-spec_.  
-Dispone de una configuración muy simple para spring security, que utiliza aunteticación básica y dispone de un único usuario en memoria (**user:password**) para el acceso a los servicios del API.   
-Incluye una muestra básica de test de integración con Testcontainers para levantar una base de datos PostgreSQL y un servidor WireMock (simulación del servicio de divisas).  
+* **spring-boot-exercise-domain:**   
+Contiene la definición de las entidades de dominio, los servicios y repositorios que serán implementados en las demás módulos del proyecto. 
 
 
-* **spring-boot-exercise-service:**  
-Contiene la lógica de negocio.  
-Procesa las peticiones del API e interactua con la capa de datos ( _spring-boot-exercise-repository_ ) y con el cliente del servicio de divisas ( _spring-boot-exercise-currency-client_ ).  
-Este módulo implementa una capa de caché para reducir las peticiones al modelo de datos.  
+* **spring-boot-exercise-aplication:**   
+Contiene la implementación de la lógica de negocio de la apliación.  
+Procesa las peticiones del API e interactúa con la capa de infraestructura para las operaciones de persistencia y la obtención de datos desde sistemas externos.   Implementa una caché para reducir el número de peticiones al modelo de datos.  
 Incluye una muestra de test unitarios.
 
 
-* **spring-boot-exercise-service:**  
-Contiene el cliente para el servicio de divisas externo e implementa una capa de caché para reducir las peticiones a dicho servicio.
-
-
-* **spring-boot-exercise-repository:**  
-Contiene la implementaciókn de la capa de acceso a datos, utilizando Spring Data JPA y JPA Specification para las búsquedas.
-
+* **spring-boot-exercise-infraestructure:**   
+Contiene la implementación y componentes para el acceso a datos y la interacción con sistemas externos (API REST, Servicio de divisas).
+Incluya una configuración muy simple para spring security, que utiliza aunteticación básica y dispone de un único usuario en memoria (**user:password**) para el acceso a los servicios del API.   
+Incluye test unitarios que utilizan Testcontainers para levantar una base de datos PostgreSQL y un servidor WireMock (simulación del servicio de divisas) cuando resulta necesario.
 
 * **spring-boot-exercise-report:**  
 Este módulo se encarga de generar un informe de cobertura utilizando JaCoCo durante la compilación del proyecto.
