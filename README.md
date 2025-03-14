@@ -94,14 +94,11 @@ Si se desea habilitar la persistencia de datos, descomente las siguientes línea
 
 
 ```
-
 #      - postgresql_data:/var/lib/postgresql/data
-
 
 #volumes:
 #   postgresql_data:
-``` 
-
+```
 
 ## Mejoras sugeridas
 
