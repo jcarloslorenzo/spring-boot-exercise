@@ -22,9 +22,9 @@
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<openapi-generator-maven-plugin.version>7.12.0</openapi-generator-maven-plugin.version>
 		<springdoc-openapi.version>2.8.5</springdoc-openapi.version>
-		
-		<wiremock-testcontainers-module.version>1.0-alpha-14</wiremock-testcontainers-module.version>
 
+		<wiremock-testcontainers-module.version>1.0-alpha-14</wiremock-testcontainers-module.version>
+		<wiremock.version>3.12.1</wiremock.version>
 	</properties>
 
 	<dependencyManagement>
@@ -32,11 +32,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>spring-boot-exercise-repository</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>spring-boot-exercise-currency-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -51,12 +46,22 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>spring-boot-exercise-api</artifactId>
+				<artifactId>spring-boot-exercise-domain</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>spring-boot-exercise-app</artifactId>
+				<artifactId>spring-boot-exercise-application</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>spring-boot-exercise-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>spring-boot-exercise-bootstrap</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -72,11 +77,17 @@
 				<version>${springdoc-openapi.version}</version>
 			</dependency>
 
-				<dependency>
-				  <groupId>org.wiremock.integrations.testcontainers</groupId>
-				  <artifactId>wiremock-testcontainers-module</artifactId>
-				  <version>${wiremock-testcontainers-module.version}</version>
-				</dependency>
+			<dependency>
+				<groupId>org.wiremock</groupId>
+				<artifactId>wiremock-standalone</artifactId>
+				<version>${wiremock.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.wiremock.integrations.testcontainers</groupId>
+				<artifactId>wiremock-testcontainers-module</artifactId>
+				<version>${wiremock-testcontainers-module.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -101,13 +112,12 @@
 	</dependencies>
 
 	<modules>
-		<module>spring-boot-exercise-repository</module>
-		<module>spring-boot-exercise-service</module>
 		<module>spring-boot-exercise-api-spec</module>
-		<module>spring-boot-exercise-api</module>
-		<module>spring-boot-exercise-app</module>
+		<module>spring-boot-exercise-domain</module>
+		<module>spring-boot-exercise-application</module>
+		<module>spring-boot-exercise-infrastructure</module>
+		<module>spring-boot-exercise-bootstrap</module>
 		<module>spring-boot-exercise-report</module>
-		<module>spring-boot-exercise-currency-client</module>
 	</modules>
 
 	<build>

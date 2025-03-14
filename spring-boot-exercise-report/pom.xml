@@ -12,22 +12,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-boot-exercise-app</artifactId>
+			<artifactId>spring-boot-exercise-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-boot-exercise-api</artifactId>
+			<artifactId>spring-boot-exercise-application</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-boot-exercise-service</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>spring-boot-exercise-repository</artifactId>
+			<artifactId>spring-boot-exercise-infrastructure</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

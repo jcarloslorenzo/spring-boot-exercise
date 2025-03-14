@@ -16,7 +16,7 @@ paths:
            content:
              application/json:
                schema:
-                 $ref: '#/components/schemas/RateCreate'
+                 $ref: '#/components/schemas/RateCreateDto'
            required: true
          responses:
             '201':
@@ -24,7 +24,7 @@ paths:
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/Rate'
+                        $ref: '#/components/schemas/RateDto'
             '400':
                 description: Invalid input
             '422':
@@ -62,7 +62,7 @@ paths:
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/Rate'
+                        $ref: '#/components/schemas/RateDto'
             '404':
                description: No rate found
 
@@ -86,7 +86,7 @@ paths:
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/Rate'
+                        $ref: '#/components/schemas/RateDto'
       
       put:
          tags:
@@ -106,7 +106,7 @@ paths:
            content:
              application/json:
                schema:
-                 $ref: '#/components/schemas/RateUpdate'
+                 $ref: '#/components/schemas/RateUpdateDto'
            required: true
          responses:
             '200':
@@ -114,7 +114,7 @@ paths:
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/Rate'
+                        $ref: '#/components/schemas/RateDto'
             '404':
                 description: Rate not found
             '422':
@@ -140,7 +140,7 @@ paths:
                
 components:
    schemas:
-      Rate:
+      RateDto:
          type: object
          properties:
             id:
@@ -167,7 +167,7 @@ components:
                type: string
                example: 10.50 € (EUR)
 
-      RateCreate:
+      RateCreateDto:
          type: object
          properties:
             brand_id:
@@ -191,7 +191,7 @@ components:
                format: double
                example: 10.50
             currency:
-               $ref: "#/components/schemas/Currency"
+               $ref: "#/components/schemas/CurrencyEnum"
                example: EUR
                
          required:
@@ -202,7 +202,7 @@ components:
             - price
             - currency
 
-      RateUpdate:
+      RateUpdateDto:
          type: object
          properties:
             price:
@@ -210,12 +210,13 @@ components:
                format: double
                example: 15.25
             currency:
-               $ref: "#/components/schemas/Currency"
+               $ref: "#/components/schemas/CurrencyEnum"
                example: USD
          required:
             - price
             - currency
-      Currency:
+            
+      CurrencyEnum:
          type: string
          enum:
             - EUR
